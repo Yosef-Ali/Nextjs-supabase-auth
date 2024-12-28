@@ -1,20 +1,20 @@
 'use server';
 
-import { supabaseServerClient } from '@/utils/supabaseServer';
+import { createServerSupabaseClient } from '@/utils/supabaseServer';
 
 export async function registerWithEmailAndPasword({
   email,
 }: {
   email: string;
 }) {
-  const supabase = await supabaseServerClient();
+  const supabase = await createServerSupabaseClient();
 
   const response = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: 'https://supabase-nextjs-j5opxp5h0-laribright.vercel.app/',
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     },
   });
 
-  return JSON.stringify(response)
+  return JSON.stringify(response);
 }
