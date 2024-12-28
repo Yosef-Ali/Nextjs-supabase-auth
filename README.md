@@ -1,24 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js + Supabase Authentication Template
 
-## Getting Started
+This is a [Next.js](https://nextjs.org/) project with Supabase Authentication integration.
 
-First, run the development server:
+## Features
+
+- 🔐 Email OTP Authentication
+- 🌐 OAuth Providers (Google, GitHub)
+- 🛡️ Protected Routes
+- 🔄 Session Management
+- 📱 Responsive Auth UI
+- 🎨 Styled with Tailwind CSS
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authentication Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Supabase Configuration**
+   - Create a Supabase project
+   - Enable Email OTP in Authentication settings
+   - Configure OAuth providers (Google, GitHub)
+   - Add callback URLs: `{NEXT_PUBLIC_APP_URL}/auth/callback`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. **OAuth Provider Setup**
+   - Google: Configure in Google Cloud Console
+   - GitHub: Configure in GitHub Developer Settings
+
+## Usage
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+### Protected Routes
+
+Add routes to middleware.ts matcher:
+```typescript
+export const config = {
+  matcher: ['/protected/:path*', '/profile/:path*']
+}
+```
+
+### Authentication Methods
+
+1. **Email OTP:**
+   - User enters email
+   - Receives magic link
+   - Redirects to callback
+
+2. **Social Providers:**
+   - Click OAuth button
+   - Authorize with provider
+   - Automatic redirect
+
+## Project Structure
+
+```
+src/
+├── actions/        # Server actions
+├── components/     # UI components
+├── context/        # Auth context
+├── hooks/         # Custom hooks
+├── middleware.ts  # Auth middleware
+└── utils/         # Supabase clients
+```
 
 ## Learn More
 
